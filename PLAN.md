@@ -125,6 +125,7 @@ Siete fases, cada una usable por sí sola; al terminar la fase 4 ya podés lleva
 
 1. **Fase 0 — Base del proyecto.** Crear la app Next.js, conectar Supabase, login y menú principal, publicar en Vercel.
    - Listo cuando: entrás desde la PC y el celular con tu usuario.
+   - **Estado (27/10/2026):** app creada (Next.js 16 + shadcn/ui), login con Supabase funcionando en la PC, registro público cerrado, menú principal, tablas de la Fase 1 creadas (`supabase/migrations/0001_fase1_catalogos.sql`, esquema completo en `supabase/ESQUEMA.md`), código en GitHub. Falta: publicar en Vercel y probar desde el celular.
 2. **Fase 1 — Catálogos.** Clientes, materiales, empleados, vehículos con su calculadora de costo por km y tipos de trabajo.
    - Listo cuando: cargaste tus materiales y empleados habituales.
 3. **Fase 2 — Cotizaciones.** Armado por ítems, cálculo de imprevistos, margen e IVA, versiones, estados y PDF para el cliente.
