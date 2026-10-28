@@ -22,6 +22,13 @@ Next.js 16 tiene cambios grandes respecto de versiones anteriores: leer la guía
 - **Mano de obra en horas:** un jornal se carga como sus horas equivalentes.
 - **Viajes:** costo = km × costo por km del vehículo + peajes.
 
+## Flujo de trabajo
+
+- **Subir todo a GitHub:** el dueño trabaja desde más de una computadora. Al terminar cada tanda de cambios (y después de que `npm run build` pase), hacer commit y `git push` sin esperar a que lo pida, incluidos `PLAN.md`, migraciones y documentación. Vercel publica solo con cada push.
+- Al empezar una sesión, correr `git pull` por si hubo cambios desde otra computadora.
+- Las migraciones nuevas van en `supabase/migrations/` numeradas; el dueño las corre a mano en el SQL Editor de Supabase, así que hay que avisarle y explicarle el paso.
+- `.env.local` no se sube; `.env.example` muestra qué variables lleva.
+
 ## Comandos
 
 - `npm run dev` — servidor local en http://localhost:3000

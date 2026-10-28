@@ -128,6 +128,7 @@ Siete fases, cada una usable por sí sola; al terminar la fase 4 ya podés lleva
    - **Estado (28/10/2026): terminada.** App creada (Next.js 16 + shadcn/ui), login con Supabase, registro público cerrado, menú principal, tablas de la Fase 1 creadas (`supabase/migrations/0001_fase1_catalogos.sql`, esquema completo en `supabase/ESQUEMA.md`), código en GitHub y publicada en Vercel (se actualiza sola con cada cambio subido a GitHub). Probada con login desde la PC y el celular.
 2. **Fase 1 — Catálogos.** Clientes, materiales, empleados, vehículos con su calculadora de costo por km y tipos de trabajo.
    - Listo cuando: cargaste tus materiales y empleados habituales.
+   - **Estado (28/10/2026): en curso.** Hechos: clientes (con validación de CUIT, llamar y WhatsApp), empleados (jornada de 8 h de referencia; el valor real va por proyecto), materiales (con planilla de Excel para descargar, editar y volver a subir, y aviso de precios de más de 60 días) y tipos de trabajo. Todo se da de baja en lugar de borrarse. Migración `0002` corrida en Supabase. Falta: vehículos con calculadora de costo por km y precios de combustible.
 3. **Fase 2 — Cotizaciones.** Armado por ítems, cálculo de imprevistos, margen e IVA, versiones, estados y PDF para el cliente.
    - Listo cuando: mandás una cotización real hecha con la app.
 4. **Fase 3 — Ejecución.** Pasar una cotización aceptada a proyecto y cargar horas, compras con foto, viajes, gastos, adicionales y cobros, con formularios rápidos para celular.
@@ -152,6 +153,8 @@ Es una app personal: solo vos cargás datos y ves los números, con conexión a 
 | Vehículos | Costo por km fijo: combustible + mantenimiento + desgaste | Cada viaje = km × costo por km + peajes |
 | Tipos de trabajo | Tableros, iluminación, mantenimiento, instalaciones; lista editable | Etiqueta por proyecto para comparar trabajos parecidos entre sí |
 | Mano de obra | Mixta, pero se carga en horas | Un jornal se carga como sus horas equivalentes |
+| Valor de los empleados | Por jornada de 8 h, definido en cada proyecto | El empleado tiene un jornal de referencia que se sugiere; el costo hora es jornal ÷ 8 |
+| Carga de materiales | Planilla de Excel | Se descarga, se edita y se sube; la app muestra los cambios antes de aplicarlos |
 
 ### Cómo sacar el costo por km
 
