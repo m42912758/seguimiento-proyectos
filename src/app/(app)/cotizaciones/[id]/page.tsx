@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { Cargando, Encabezado } from "@/components/encabezado";
+import { buttonVariants } from "@/components/ui/button";
 import { formatearFecha, formatearMoneda, formatearNumero } from "@/lib/formato";
 import { createClient } from "@/lib/supabase/server";
 import { cn } from "@/lib/utils";
@@ -28,12 +29,16 @@ async function FichaCotizacion({ params }: { params: Promise<{ id: string }> }) 
   const proyecto = cotizacion.proyectos;
 
   const supabase = await createClient();
-  const { data: versiones } = await supabase
-    .from("cotizaciones")
-    .select("id, version, fecha, estado, vencimiento, total")
-    .eq("proyecto_id", proyecto.id)
-    .order("version", { ascending: false })
-    .returns<Cotizacion[]>();
+  const [{ data: versiones }, { count: filasMisDatos }] = await Promise.all([
+    supabase
+      .from("cotizaciones")
+      .select("id, version, fecha, estado, vencimiento, total")
+      .eq("proyecto_id", proyecto.id)
+      .order("version", { ascending: false })
+      .returns<Cotizacion[]>(),
+    supabase.from("mis_datos").select("user_id", { count: "exact", head: true }),
+  ]);
+  const tieneMisDatos = Boolean(filasMisDatos);
 
   const editable = cotizacion.estado === "borrador";
   const totales = calcularTotales(items, cotizacion.pct_imprevistos, cotizacion.pct_margen);
@@ -92,6 +97,42 @@ async function FichaCotizacion({ params }: { params: Promise<{ id: string }> }) 
         pctImprevistos={cotizacion.pct_imprevistos}
         pctMargen={cotizacion.pct_margen}
       />
+
+      {items.length > 0 && (
+        <div className="flex flex-col gap-2">
+          <div className="grid grid-cols-2 gap-2">
+            <a
+              href={`/cotizaciones/${cotizacion.id}/pdf`}
+              target="_blank"
+              rel="noopener"
+              className={cn(buttonVariants({ variant: "outline" }), "h-11")}
+            >
+              PDF detallado
+            </a>
+            <a
+              href={`/cotizaciones/${cotizacion.id}/pdf?modo=rubros`}
+              target="_blank"
+              rel="noopener"
+              className={cn(buttonVariants({ variant: "outline" }), "h-11")}
+            >
+              PDF por rubro
+            </a>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            El cliente ve los precios con imprevistos y margen incluidos; no ve
+            tus costos.
+            {!tieneMisDatos && (
+              <>
+                {" "}
+                <Link href="/mis-datos" className="underline">
+                  Cargá tus datos
+                </Link>{" "}
+                para el encabezado.
+              </>
+            )}
+          </p>
+        </div>
+      )}
 
       {cotizacion.notas && (
         <div className="flex flex-col gap-1 text-sm">

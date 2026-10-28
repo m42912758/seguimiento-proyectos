@@ -1,6 +1,7 @@
+import Link from "next/link";
 import { Suspense } from "react";
 import { MenuLinks, MenuPrincipal } from "@/components/menu-principal";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { cerrarSesion } from "../login/actions";
 
 export default function AppLayout({ children }: LayoutProps<"/">) {
@@ -10,11 +11,19 @@ export default function AppLayout({ children }: LayoutProps<"/">) {
         <div className="mx-auto flex max-w-5xl flex-col gap-2 px-4 pt-3 pb-2">
           <div className="flex items-center justify-between">
             <span className="font-semibold">Seguimiento de proyectos</span>
-            <form action={cerrarSesion}>
-              <Button type="submit" variant="ghost" size="sm">
-                Salir
-              </Button>
-            </form>
+            <div className="flex items-center gap-1">
+              <Link
+                href="/mis-datos"
+                className={buttonVariants({ variant: "ghost", size: "sm" })}
+              >
+                Mis datos
+              </Link>
+              <form action={cerrarSesion}>
+                <Button type="submit" variant="ghost" size="sm">
+                  Salir
+                </Button>
+              </form>
+            </div>
           </div>
           <Suspense fallback={<MenuLinks />}>
             <MenuPrincipal />

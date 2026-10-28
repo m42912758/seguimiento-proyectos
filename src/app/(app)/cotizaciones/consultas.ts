@@ -1,3 +1,4 @@
+import type { CondicionIva } from "@/app/(app)/clientes/datos";
 import { createClient } from "@/lib/supabase/server";
 import type { Cotizacion, ItemCotizacion, Proyecto } from "./datos";
 
@@ -28,7 +29,7 @@ export async function opcionesEncabezado(proyecto?: Proyecto) {
 
 export type CotizacionCompleta = Cotizacion & {
   proyectos: Proyecto & {
-    clientes: { nombre: string; cuit: string | null };
+    clientes: { nombre: string; cuit: string | null; condicion_iva: CondicionIva };
     tipos_trabajo: { nombre: string } | null;
   };
 };
@@ -38,7 +39,7 @@ export async function leerCotizacionCompleta(id: number) {
   const [{ data: cotizacion }, { data: items }] = await Promise.all([
     supabase
       .from("cotizaciones")
-      .select("*, proyectos(*, clientes(nombre, cuit), tipos_trabajo(nombre))")
+      .select("*, proyectos(*, clientes(nombre, cuit, condicion_iva), tipos_trabajo(nombre))")
       .eq("id", id)
       .returns<CotizacionCompleta[]>()
       .maybeSingle(),

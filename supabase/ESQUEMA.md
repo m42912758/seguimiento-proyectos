@@ -31,7 +31,9 @@ Migraciones: `0001_fase1_catalogos.sql` y `0002_jornal_y_combustible.sql`.
 | `cotizaciones` | proyecto_id, version, fecha, vencimiento, pct_imprevistos, pct_margen, total_costo, total_neto, total_iva, total, dolar_dia, estado, notas | estado: borrador, enviada, aceptada, rechazada, reemplazada ("vencida" se calcula). Solo se modifica en borrador; una sola aceptada por proyecto, que queda como línea base |
 | `cotizacion_items` | cotizacion_id, rubro, descripcion, cantidad, unidad, costo_unitario, alicuota_iva, material_id, vehiculo_id, km_por_viaje, costo_por_km, peajes_por_viaje, orden | rubro: material, mano_obra (cantidad en horas), viaje (cantidad = viajes), otro. El precio de venta no se guarda: costo × (1 + imprevistos) × (1 + margen) |
 
-Migración: `0003_fase2_cotizaciones.sql`.
+| `mis_datos` | user_id (clave), razon_social, nombre_fantasia, cuit, telefono, email, direccion, logo | Una fila: encabezado de los PDF. El logo va achicado como data URL (PNG o JPEG) |
+
+Migraciones: `0003_fase2_cotizaciones.sql` y `0004_mis_datos.sql`.
 
 ## Fase 3 — Ejecución
 
