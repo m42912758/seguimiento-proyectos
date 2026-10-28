@@ -17,9 +17,11 @@ Propuesta completa según la sección "Modelo de datos" de `PLAN.md`. Solo las t
 | `tipos_trabajo` | nombre, activo | Tableros, Iluminación, Mantenimiento, Instalaciones; lista editable |
 | `clientes` | nombre, cuit, condicion_iva, telefono, email, direccion, notas, activo | condicion_iva: responsable_inscripto, monotributo, exento, consumidor_final |
 | `materiales` | descripcion, unidad, precio, alicuota_iva, proveedor, fecha_precio, activo | precio sin IVA |
-| `empleados` | nombre, categoria, costo_hora, tarifa_hora, activo | costo_hora = sueldo + cargas; tarifa_hora = lo que se cobra |
-| `vehiculos` | nombre, patente, consumo_l_100km, precio_litro, mantenimiento_anual, km_por_anio, valor_compra, valor_reventa, km_vida_util, costo_por_km, fecha_costo, activo | costo_por_km se calcula en la ficha y se guarda fijo |
-| `precios_combustible` | fecha, tipo, precio_litro | Historial de precios para recalcular vehículos |
+| `empleados` | nombre, categoria, jornal_referencia, activo | Jornada de 8 h; el valor real se define en cada proyecto (`proyecto_empleados`) |
+| `vehiculos` | nombre, patente, tipo_combustible, consumo_l_100km, precio_litro, mantenimiento_anual, km_por_anio, valor_compra, valor_reventa, km_vida_util, costo_por_km, fecha_costo, activo | costo_por_km se calcula en la ficha y se guarda fijo |
+| `precios_combustible` | fecha, tipo, precio_litro | tipo: nafta, gasoil, gnc. Historial de precios para recalcular vehículos |
+
+Migraciones: `0001_fase1_catalogos.sql` y `0002_jornal_y_combustible.sql`.
 
 ## Fase 2 — Cotizaciones
 
@@ -35,7 +37,8 @@ Todos llevan `proyecto_id`, `fecha` y, cuando corresponde, `cotizacion_item_id` 
 
 | Tabla | Campos | Notas |
 | --- | --- | --- |
-| `partes_horas` | empleado_id, horas_normales, horas_extra, costo_hora_aplicado, nota | El costo hora se copia al cargar, para que no cambie si después sube el sueldo |
+| `proyecto_empleados` | empleado_id, jornal | Valor de la jornada de 8 h de cada empleado en ese proyecto; arranca con su jornal de referencia |
+| `partes_horas` | empleado_id, horas_normales, horas_extra, costo_hora_aplicado, nota | costo_hora_aplicado = jornal del proyecto ÷ 8, copiado al cargar |
 | `compras` | proveedor, monto, alicuota_iva, comprobante_path, descripcion | Foto en Supabase Storage; una compra repartida entre proyectos se guarda como varias filas |
 | `viajes` | vehiculo_id, km, costo_por_km_aplicado, peajes, quienes, origen, destino | costo = km × costo_por_km_aplicado + peajes |
 | `gastos` | tipo, monto, descripcion, comprobante_path | tipo: comida, alojamiento, alquiler, flete, subcontrato, otro |

@@ -14,13 +14,17 @@ export const SECCIONES = [
 ];
 
 export function MenuPrincipal() {
-  const pathname = usePathname();
+  return <MenuLinks pathname={usePathname()} />;
+}
 
+// Sin pathname no marca ninguna sección: es la versión que se muestra
+// mientras se resuelve la dirección en páginas dinámicas.
+export function MenuLinks({ pathname }: { pathname?: string }) {
   return (
     <nav className="-mx-4 flex gap-1 overflow-x-auto px-4">
       {SECCIONES.map(({ href, titulo }) => {
         const activa =
-          href === "/" ? pathname === "/" : pathname.startsWith(href);
+          href === "/" ? pathname === "/" : Boolean(pathname?.startsWith(href));
         return (
           <Link
             key={href}

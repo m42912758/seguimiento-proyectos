@@ -1,4 +1,5 @@
-import { MenuPrincipal } from "@/components/menu-principal";
+import { Suspense } from "react";
+import { MenuLinks, MenuPrincipal } from "@/components/menu-principal";
 import { Button } from "@/components/ui/button";
 import { cerrarSesion } from "../login/actions";
 
@@ -15,7 +16,9 @@ export default function AppLayout({ children }: LayoutProps<"/">) {
               </Button>
             </form>
           </div>
-          <MenuPrincipal />
+          <Suspense fallback={<MenuLinks />}>
+            <MenuPrincipal />
+          </Suspense>
         </div>
       </header>
       <main className="mx-auto w-full max-w-5xl flex-1 p-4">{children}</main>
