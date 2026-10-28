@@ -55,3 +55,10 @@ export function leerNumero(texto: string | null | undefined) {
 export function numeroParaInput(valor: number | null | undefined) {
   return valor == null ? "" : String(valor).replace(".", ",");
 }
+
+// "2026-10-28" + 15 → "2026-11-12".
+export function sumarDias(iso: string, dias: number) {
+  const fecha = new Date(`${iso.slice(0, 10)}T12:00:00Z`);
+  fecha.setUTCDate(fecha.getUTCDate() + dias);
+  return fecha.toISOString().slice(0, 10);
+}

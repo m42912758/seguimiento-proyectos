@@ -23,13 +23,15 @@ Propuesta completa según la sección "Modelo de datos" de `PLAN.md`. Solo las t
 
 Migraciones: `0001_fase1_catalogos.sql` y `0002_jornal_y_combustible.sql`.
 
-## Fase 2 — Cotizaciones
+## Fase 2 — Cotizaciones (creadas)
 
 | Tabla | Campos | Notas |
 | --- | --- | --- |
-| `proyectos` | codigo, nombre, cliente_id, tipo_trabajo_id, estado, direccion, fecha_inicio_plan, fecha_fin_plan, fecha_inicio_real, fecha_fin_real | estado: borrador, enviada, rechazada, en_ejecucion, finalizado, cerrado |
-| `cotizaciones` | proyecto_id, version, fecha, vencimiento, pct_imprevistos, pct_margen, total_neto, total_iva, total, dolar_dia, estado, aceptada | La versión aceptada queda congelada como línea base |
-| `cotizacion_items` | cotizacion_id, rubro, descripcion, cantidad, unidad, costo_unitario, precio_unitario, alicuota_iva, material_id, orden | rubro: material, mano_obra, viaje, otro |
+| `proyectos` | codigo, nombre, cliente_id, tipo_trabajo_id, estado, direccion, fecha_inicio_plan, fecha_fin_plan, fecha_inicio_real, fecha_fin_real | codigo: P-0001… estado: cotizando, aceptado, rechazado, en_ejecucion, finalizado, cerrado |
+| `cotizaciones` | proyecto_id, version, fecha, vencimiento, pct_imprevistos, pct_margen, total_costo, total_neto, total_iva, total, dolar_dia, estado, notas | estado: borrador, enviada, aceptada, rechazada, reemplazada ("vencida" se calcula). Solo se modifica en borrador; una sola aceptada por proyecto, que queda como línea base |
+| `cotizacion_items` | cotizacion_id, rubro, descripcion, cantidad, unidad, costo_unitario, alicuota_iva, material_id, vehiculo_id, km_por_viaje, costo_por_km, peajes_por_viaje, orden | rubro: material, mano_obra (cantidad en horas), viaje (cantidad = viajes), otro. El precio de venta no se guarda: costo × (1 + imprevistos) × (1 + margen) |
+
+Migración: `0003_fase2_cotizaciones.sql`.
 
 ## Fase 3 — Ejecución
 
