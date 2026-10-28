@@ -24,6 +24,8 @@ Next.js 16 tiene cambios grandes respecto de versiones anteriores: leer la guía
 
 ## Flujo de trabajo
 
+- **Responder siempre en español** y explicar paso a paso lo que tenga que hacer el dueño (no es desarrollador web).
+
 - **Subir todo a GitHub:** el dueño trabaja desde más de una computadora. Al terminar cada tanda de cambios (y después de que `npm run build` pase), hacer commit y `git push` sin esperar a que lo pida, incluidos `PLAN.md`, migraciones y documentación. Vercel publica solo con cada push.
 - Al empezar una sesión, correr `git pull` por si hubo cambios desde otra computadora.
 - Las migraciones nuevas van en `supabase/migrations/` numeradas; el dueño las corre a mano en el SQL Editor de Supabase, así que hay que avisarle y explicarle el paso.
