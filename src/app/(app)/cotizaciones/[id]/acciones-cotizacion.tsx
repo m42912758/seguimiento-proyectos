@@ -9,6 +9,7 @@ import {
   nuevaVersion,
   type CambioEstado,
 } from "../actions";
+import { empezarObra } from "@/app/(app)/proyectos/actions";
 import type { EstadoCotizacion } from "../datos";
 
 type Boton = {
@@ -67,6 +68,11 @@ export function AccionesCotizacion({
     ];
   } else if (estado === "aceptada" && !bloqueada) {
     botones = [
+      {
+        texto: "Empezar obra",
+        accion: () => empezarObra(id),
+        confirmar: "¿Empezar la obra? Esta cotización queda fija para comparar al final.",
+      },
       { texto: "Deshacer aceptación", accion: cambio("deshacer"), variante: "outline" },
     ];
   }

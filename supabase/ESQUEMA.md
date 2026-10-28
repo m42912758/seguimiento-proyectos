@@ -35,16 +35,16 @@ Migraciones: `0001_fase1_catalogos.sql` y `0002_jornal_y_combustible.sql`.
 
 Migraciones: `0003_fase2_cotizaciones.sql` y `0004_mis_datos.sql`.
 
-## Fase 3 — Ejecución
+## Fase 3 — Ejecución (primera tanda creada: proyecto_empleados, partes_horas, viajes)
 
-Todos llevan `proyecto_id`, `fecha` y, cuando corresponde, `cotizacion_item_id` para comparar renglón por renglón.
+Migración `0005_fase3_horas_viajes.sql` (primera tanda). Todos llevan `proyecto_id`, `fecha` y, cuando corresponde, `cotizacion_item_id` para comparar renglón por renglón.
 
 | Tabla | Campos | Notas |
 | --- | --- | --- |
 | `proyecto_empleados` | empleado_id, jornal | Valor de la jornada de 8 h de cada empleado en ese proyecto; arranca con su jornal de referencia |
-| `partes_horas` | empleado_id, horas_normales, horas_extra, costo_hora_aplicado, nota | costo_hora_aplicado = jornal del proyecto ÷ 8, copiado al cargar |
-| `compras` | proveedor, monto, alicuota_iva, comprobante_path, descripcion | Foto en Supabase Storage; una compra repartida entre proyectos se guarda como varias filas |
-| `viajes` | vehiculo_id, km, costo_por_km_aplicado, peajes, quienes, origen, destino | costo = km × costo_por_km_aplicado + peajes |
+| `partes_horas` | empleado_id, fecha, horas_normales, horas_extra, costo_hora_aplicado, costo_hora_extra_aplicado, cotizacion_item_id, nota | costo_hora_aplicado = jornal del proyecto ÷ 8, copiado al cargar; la extra lleva +50% |
+| `compras` | proveedor, monto (neto, cargado a mano), comprobante_path, descripcion | Foto en Supabase Storage; una compra repartida entre proyectos se guarda como varias filas |
+| `viajes` | vehiculo_id, fecha, km, costo_por_km_aplicado, peajes, destino, quienes, nota | costo = km × costo_por_km_aplicado + peajes |
 | `gastos` | tipo, monto, descripcion, comprobante_path | tipo: comida, alojamiento, alquiler, flete, subcontrato, otro |
 | `adicionales` | descripcion, monto_aprobado | Cambios de alcance pedidos por el cliente |
 | `cobros` | monto, medio, nota | Anticipos y pagos |

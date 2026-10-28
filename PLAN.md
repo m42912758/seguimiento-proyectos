@@ -134,6 +134,7 @@ Siete fases, cada una usable por sí sola; al terminar la fase 4 ya podés lleva
    - **Estado (28/10/2026): terminada y probada** (cotizaciones, versiones, estados y PDF). Migraciones `0003` y `0004` corridas. Hechos: crear cotización (cliente, trabajo, tipo, dirección, % de imprevistos y margen, vencimiento a 15 días, condiciones), código automático P-0001, ítems por rubro (materiales buscados en el catálogo, mano de obra en horas o jornales, viajes con km × costo por km + peajes, otros gastos), totales con costo, imprevistos, margen, neto, IVA por alícuota y total; estados borrador → enviada → aceptada / rechazada, "vencida" automática, versiones nuevas que guardan la anterior. Migración `0003` corrida en Supabase. Segunda tanda: PDF para el cliente, detallado o por rubro (precios con imprevistos y margen incluidos, sin costos), y pantalla "Mis datos" con razón social, CUIT, contacto y logo para el encabezado (migración `0004`).
 4. **Fase 3 — Ejecución.** Pasar una cotización aceptada a proyecto y cargar horas, compras con foto, viajes, gastos, adicionales y cobros, con formularios rápidos para celular.
    - Listo cuando: llevás una semana de obra cargada sin papel.
+   - **Estado (28/10/2026): en curso, primera tanda programada, falta probarla.** Hechos: botón "Empezar obra" en la cotización aceptada (queda fija como línea base), sección Proyectos, equipo de cada obra con el valor de la jornada ahí, carga de horas (varios empleados a la vez, normales y extra al +50%), carga de viajes (repite el último), y en la ficha lo gastado contra lo cotizado en mano de obra y viajes. Migración `0005` (hay que correrla). Faltan: segunda tanda (compras y gastos con foto, en neto) y tercera (adicionales, cobros, avance y resumen completo).
 5. **Fase 4 — Cierre y reporte.** Comparación cotizado vs. real por rubro, margen final, lecciones aprendidas y PDF del reporte.
    - Listo cuando: cerrás tu primer proyecto con reporte.
 6. **Fase 5 — Panel e indicadores.** Panel general, indicadores históricos, alertas de desvío durante la obra, exportación a Excel y conversión al dólar Banco Nación.
@@ -156,6 +157,8 @@ Es una app personal: solo vos cargás datos y ves los números, con conexión a 
 | Mano de obra | Mixta, pero se carga en horas | Un jornal se carga como sus horas equivalentes |
 | Valor de los empleados | Por jornada de 8 h, definido en cada proyecto | El empleado tiene un jornal de referencia que se sugiere; el costo hora es jornal ÷ 8 |
 | Carga de materiales | Planilla de Excel | Se descarga, se edita y se sube; la app muestra los cambios antes de aplicarlos |
+| Compras y gastos en obra | Se cargan en neto, a mano | El costo real se compara sin IVA contra lo cotizado; el IVA de las compras no se registra |
+| Horas extra | Recargo fijo del 50% | La hora extra cuesta 1,5 veces la hora normal de ese empleado en la obra |
 
 ### Cómo sacar el costo por km
 

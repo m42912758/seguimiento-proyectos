@@ -75,6 +75,16 @@ async function FichaCotizacion({ params }: { params: Promise<{ id: string }> }) 
         )}
       </div>
 
+      {["en_ejecucion", "finalizado", "cerrado"].includes(proyecto.estado) &&
+        cotizacion.estado === "aceptada" && (
+          <Link
+            href={`/proyectos/${proyecto.id}`}
+            className={cn(buttonVariants(), "h-11")}
+          >
+            Ver la obra →
+          </Link>
+        )}
+
       {!editable && cotizacion.estado !== "reemplazada" && (
         <p className="rounded-lg bg-muted px-3 py-2 text-sm text-muted-foreground">
           Esta versión ya no se puede modificar. Para cambiarla, creá una versión nueva.
